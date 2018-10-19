@@ -1,5 +1,6 @@
 # Store-Manager-API
 Store manager API
+
 https://coveralls.io/repos/github/kathy254/Store-Manager-API/badge.svg?branch=ft-store-attendant-161239141(Coverage Status)!:https://coveralls.io/github/kathy254/Store-Manager-API?branch=ft-store-attendant-161239141
 
 **Store Manager**
