@@ -5,9 +5,9 @@ from ... import create_app
 from ...api.v1.model.sales import Sales
 
 class TestInvalidData(unittest.TestCase):
-	"""
-	class to test sales endpoint invalid data
-	"""
+	
+	"""This class test for invalid endpoints in data"""
+
 	def setUp(self):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
@@ -17,16 +17,16 @@ class TestInvalidData(unittest.TestCase):
 		self.content_type = None
 
 
-	# test if user enter an invalid json  payload
+	#testing for invalid json payload
 	def test_invalid_payload(self):
-		payload = {'productId':0,'quantity':10,'xyz':''}
+		payload = {'productId':0,'quantity':10,'abc':''}
 		response = self.test.post('/sales/',content_type=self.content_type,
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result':'invalid payload'})
+		self.assertEqual(data,{'result':'Payload is invalid'})
 
-	# test if user enters an invalid data type
+	#testing for invalid data types
 	def test_invalid_data_type(self):
 		payload = {'productId':0,'quantity':'0'}
 		response = self.test.post('/sales/',content_type=self.content_type,
@@ -35,23 +35,23 @@ class TestInvalidData(unittest.TestCase):
 		self.assertEqual(response.status_code,400)
 		self.assertEqual(data['message'],'Input payload validation failed')
 
-	# test quantity less than 1
-	def test_min_quantity(self):
-		payload = {'productId':0,'quantity':-90}
+	#testing for quantity that's less than 1
+	def test_minimum_quantity(self):
+		payload = {'productId':0,'quantity':-1}
 		response = self.test.post('/sales/',content_type=self.content_type,
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result':'quantity can not be less than one'})
+		self.assertEqual(data,{'result':'Product quantity can not be less than 1'})
 
-	# test id less than 1
+	# testing when productId is less than 1
 	def test_min_id(self):
 		payload = {'productId':-20,'quantity':90}
 		response = self.test.post('/sales/',content_type=self.content_type,
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result':'productId can not be less than zero'})
+		self.assertEqual(data,{'result':'productId can not be less than 0'})
 
 	
 	def test_max_id(self):
@@ -72,13 +72,7 @@ class TestValidData(unittest.TestCase):
 			data=json.dumps(self.product))
 		self.payload = {'quantity':10,'productId':0}
 
-	def tearDown(self):
-		self.test = None
-		self.content_type = None
-		self.product = None
-		self.payload = None
-		Sales.sales.clear()
-
+	
 	def test_add_sales(self):
 		response = self.test.post('/sales/',content_type=self.content_type,
 			data=json.dumps(self.payload))
@@ -99,9 +93,6 @@ class TestValidData(unittest.TestCase):
 		self.assertEqual(response.status_code,201)
 		response = self.test.get('/sales/{}'.format(0),content_type=self.content_type)
 		self.assertEqual(response.status_code,200)
-
-
-
 
 
 if __name__ == '__main__':
