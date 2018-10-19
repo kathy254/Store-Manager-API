@@ -1,7 +1,5 @@
 class Verify:
-	"""
-	class to verify data
-	"""
+	
 	def is_empty(self,items):
 		for item in items:
 			if bool(item) is False:
