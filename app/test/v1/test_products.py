@@ -19,17 +19,16 @@ class TestInvalidData(unittest.TestCase):
 
 	# test if input is empty
 	def test_empty_products(self):
-		payload = {'name': '', 'quantity': 1, 'category': "Girls' dresses",'moq':1,'price':100}
+		payload = {'name': '', 'quantity': 1, 'category': 'dresses','moq':1,'price':100}
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
 		self.assertEqual(data,{'result': 'data set is empty'})
 
-
 	# test when input contains only white space
 	def test_white_space_products(self):
-		payload = {'name': '  ', 'quantity': 1, 'category': "Girls' dresses",'moq':1,'price':100}
+		payload = {'name': '  ', 'quantity': 1, 'category': 'dresses','moq':1,'price':100}
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
@@ -38,7 +37,7 @@ class TestInvalidData(unittest.TestCase):
 
 	# test if user enter an invalid json  payload
 	def test_invalid_payload(self):
-		payload = {'name': 'Gucci dress', 'quantity': 1, 'category': "Girls' dresses",'moq':1,'xyz':'','price':100}
+		payload = {'name': 'Gucci dress', 'quantity': 1, 'category': 'dresses','moq':1,'xyz':'','price':100}
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
@@ -47,7 +46,7 @@ class TestInvalidData(unittest.TestCase):
 
 	# test if user enters an invalid data type
 	def test_invalid_data_type(self):
-		payload = {'name': 'Gucci dress', 'quantity': 1, 'category': "Girls' dresses",'moq':'0','price':100}
+		payload = {'name': 'Gucci dress', 'quantity': 1, 'category': 'dresses','moq':'0','price':100}
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
@@ -55,13 +54,13 @@ class TestInvalidData(unittest.TestCase):
 		self.assertEqual(data['message'],'Input payload validation failed')
 
 	# test quantity less than 1
-	def test_min_quantity(self):
-		payload = {'name': 'Gucci dress', 'quantity': -21, 'category': "Girls' dresses",'moq':0,'price':100}
+	def test_minimum_quantity(self):
+		payload = {'name': 'Gucci dress', 'quantity': -21, 'category': 'dresses','moq':0,'price':100}
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
 		self.assertEqual(response.status_code,406)
-		self.assertEqual(data,{'result': 'Product quantity can not be less than 1'})
+		self.assertEqual(data,{'result':'Product quantity cannot be less than 1'})
 
 	def test_invalid_products_id(self):
 		response =self.test.get('/products/-12',content_type=self.content_type)
@@ -70,7 +69,7 @@ class TestInvalidData(unittest.TestCase):
 		self.assertEqual(data,{'result':'no products found'})
 
 	def test_min_price(self):
-		payload = {'name': 'Gucci dress', 'quantity': 21, 'category': "Girls' dresses",'moq':0,'price':0}
+		payload = {'name': 'Gucci dress', 'quantity': 21, 'category': 'dresses','moq':0,'price':0}
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(payload))
 		data = json.loads(response.get_data().decode('UTF-8'))
@@ -82,9 +81,14 @@ class TestValidData(unittest.TestCase):
 	def setUp(self):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
-		self.payload = {'name': 'Gucci dress', 'quantity': 1, 'category': "Girls' dresses",'moq':0,'price':100}
+		self.payload = {'name': 'Gucci dress', 'quantity': 1, 'category': 'dresses','moq':0,'price':100}
 
 
+	def tearDown(self):
+		self.test = None
+		self.content_type = None
+		
+		
 	def test_post_products_data(self):
 		response = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(self.payload))
