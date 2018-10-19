@@ -104,12 +104,7 @@ class TestValidData(unittest.TestCase):
 		response = self.test.get('/products/',content_type=self.content_type)
 		self.assertEqual(response.status_code,200)
 
-	def test_no_products_found(self):
-		response = self.test.get('/products/',content_type=self.content_type)
-		data = json.loads(response.get_data().decode('UTF-8'))
-		self.assertEqual(response.status_code,404)
-		self.assertEqual(data,{'result':'no products found'})
-
+	
 	def test_get_one_products(self):
 		post = self.test.post('/products/',content_type=self.content_type,
 			data=json.dumps(self.payload))
