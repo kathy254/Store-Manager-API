@@ -1,7 +1,7 @@
 from flask_bcrypt import Bcrypt
-from flask import current_app
 import jwt
 from datetime import datetime, timedelta
+from .... import create_app
 
 
 class User:
@@ -9,7 +9,7 @@ class User:
     users = []
 
     def __init__(self, email, password):
-        #initialize all uses with an email and a password
+        #initialize all users with an email and a password
         self.email = email
         self.password = password
     
@@ -35,9 +35,7 @@ class User:
 
             # create the byte string token using the payload and the SECRET key
             jwt_string = jwt.encode(
-                payload,
-                current_app.config.get('SECRET'),
-                algorithm='HS256'
+                payload, create_app('SECRET'), algorithm='HS256'
             )
             return jwt_string
 
@@ -51,7 +49,7 @@ class User:
         #Decode the access token from the authorization header.
        
         try:
-            payload = jwt.decode(token, current_app.config.get('SECRET'))
+            payload = jwt.decode(token, create_app('SECRET'))
             return payload['sub']
         except jwt.ExpiredSignatureError:
             return "Expired token. Please log in to get a new token"
