@@ -1,6 +1,6 @@
 # Store-Manager-API
 Store manager API
-
+https://coveralls.io/repos/github/kathy254/Store-Manager-API/badge.svg?branch=ft-store-attendant-161239141(Coverage Status)!:https://coveralls.io/github/kathy254/Store-Manager-API?branch=ft-store-attendant-161239141
 
 **Store Manager**
 Store Manger API is a web application that makes it easier for store owners to manager their inventory, sales, and products to ensure they do not sale anything that is out of stock. This API is suitable for use by a single store.
