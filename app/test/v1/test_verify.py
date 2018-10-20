@@ -16,7 +16,9 @@ class TestVerify(unittest.TestCase):
 	def test_is_empty(self):
 		test = self.obj.is_empty(['', 'dress'])
 		self.assertTrue(test)
-		def test_is_not_empty(self):
+
+	
+	def test_is_not_empty(self):
 			test = self.obj.is_empty(['suit', 'suit'])
 			self.assertFalse(test)
 			
