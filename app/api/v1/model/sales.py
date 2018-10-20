@@ -1,4 +1,5 @@
 from .verify import Verify
+from .products import Products
 
 
 class Sales(Verify):
@@ -6,7 +7,7 @@ class Sales(Verify):
 	def __init__(self,items):
 		self.items = items
 
-	def check_user_input(self):
+	def check_sales_input(self):
 		if self.is_sales_payload(self.items) is False:
 			return {'result': 'Payload is invalid'},406
 		elif self.items['quantity'] < 1:
@@ -15,3 +16,11 @@ class Sales(Verify):
 			return {'result': 'productId can not be less than 0'},406
 		else:
 			return 1
+
+	def add_sales_record(self):
+		items = self.items
+		prodID = Products.get_one(items['productId'])
+		total = prodID[items['productId']]['price'] * items['quantity']
+		items['price'] = total
+		Sales.sales.append(items)
+		return {'result': 'sales added'}, 201

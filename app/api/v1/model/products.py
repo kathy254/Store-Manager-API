@@ -6,16 +6,18 @@ class Products(Verify):
 	def __init__(self,items):
 		self.items = items
 
-	def check_user_input(self):
-		payload=self.is_product_payload(self.items) 
+
+	def check_product_input(self):
+		payload=self.is_product_payload(self.items)
+		strings = [self.items['name'], self.items['category']]
 		if payload is False:
 			return {'result':'invalid payload'},406
-		elif self.is_empty([self.items['name'],self.items['category']]) is True:
+		elif self.is_empty(strings) is True:
 			return {'result': 'data set is empty'},406
-		elif self.is_whitespace([self.items['name'],self.items['category']]) is True:
+		elif self.is_whitespace(strings) is True:
 			return {'result': 'data set contains only white space'},406
 		elif self.items['quantity'] < 1:
-			return {'result': 'Product quantity cannot be less than 1'},406
+			return {'result': 'quantity can not be less than one'},406
 		elif self.items['price'] < 1:
 			return {'result': 'price can not be less than one'},406
 		else:
