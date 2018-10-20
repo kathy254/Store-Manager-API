@@ -1,33 +1,28 @@
-import os
-
-
 class Config(object):
-    """Parent configuration class."""
+    #Parent configuration class
     DEBUG = False
-    CSRF_ENABLED = True
-    SECRET = os.getenv('FLASK_SECRET')
-    
+    SECRET = '765uytjhgmnb'
+    ENV = 'development'
+    TESTING=False
+
 
 class DevelopmentConfig(Config):
-    """Configurations for Development."""
+    #configurations for development
     DEBUG = True
 
 
 class TestingConfig(Config):
-    """Configurations for Testing."""
+    #Configurations for testing
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://%s:%s@localhost:3306/test_WSCartAPI' % (os.getenv('MYSQL_USER'),
-                                                                          os.getenv('MYSQL_PASSWORD'))
-    DEBUG = True
-
+    
 
 class StagingConfig(Config):
-    """Configurations for Staging."""
+    #Configurations for staging
     DEBUG = True
 
 
 class ProductionConfig(Config):
-    """Configurations for Production."""
+    #Configurations for production
     DEBUG = False
     TESTING = False
 
