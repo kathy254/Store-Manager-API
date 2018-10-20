@@ -1,12 +1,8 @@
 from flask import Flask
-import json
-from flask_restplus import Api
-from jsonschema import validate
+
 
 from .api.v1 import app_v1
 from instance.config import app_config
-
-from flask_bcrypt import Bcrypt
 
 
 def create_app(config):

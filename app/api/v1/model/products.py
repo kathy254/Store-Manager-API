@@ -11,15 +11,15 @@ class Products(Verify):
 		payload=self.is_product_payload(self.items)
 		strings = [self.items['name'], self.items['category']]
 		if payload is False:
-			return {'result':'invalid payload'},406
+			return {'result':'Payload is invalid'},406
 		elif self.is_empty(strings) is True:
-			return {'result': 'data set is empty'},406
+			return {'result':'Data set is empty'},406
 		elif self.is_whitespace(strings) is True:
-			return {'result': 'data set contains only white space'},406
+			return {'result':'data set contains only white space'},406
 		elif self.items['quantity'] < 1:
-			return {'result': 'quantity can not be less than one'},406
+			return {'result':'Product quantity cannot be less than 1'},406
 		elif self.items['price'] < 1:
-			return {'result': 'price can not be less than one'},406
+			return {'result':'Price cannot be less than 0'},406
 		else:
 			return 1
 
@@ -31,13 +31,13 @@ class Products(Verify):
 	@classmethod
 	def get_all(cls):
 		if len(Products.products) == 0:
-			return {'result': 'no products found'},404
+			return {'result': 'No products found'},404
 		else:
 			return Products.products,200
 
 	@classmethod
 	def get_one(cls,productId):
 		if len(Products.products) == 0:
-			return {'result': 'no products found'},404
+			return {'result': 'No products found'},404
 		else:
 			return Products.products[productId],200
