@@ -1,6 +1,6 @@
 # Store-Manager-API
 
-[![Coverage Status](https://coveralls.io/repos/github/kathy254/Store-Manager-API/badge.png?branch=ft-store-attendant-161239141)](https://coveralls.io/github/kathy254/Store-Manager-API?branch=ft-store-attendant-161239141)
+[![Coverage Status](https://coveralls.io/repos/github/kathy254/Store-Manager-API/badge.svg?branch=ft-user-login-161361368)](https://coveralls.io/github/kathy254/Store-Manager-API?branch=ft-user-login-161361368)
 
 [![Build Status](https://travis-ci.org/kathy254/Store-Manager-API.svg?branch=ft-store-attendant-161239141)](https://travis-ci.org/kathy254/Store-Manager-API)
 
