@@ -1,5 +1,7 @@
 import jwt
 
+import datetime
+
 from .verify import Verify
 
 
@@ -31,12 +33,15 @@ class Accounts(Verify):
 		return res
 
 	def login(self):
-		token = jwt.encode({'email_address':self.items['email_address'],'role':self.items['role']},'765uytjhgmnb',
+		token = jwt.encode({
+			'email_address':self.items['email_address'],
+			'role':self.items['role'],
+			'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)},'765uytjhgmnb',
 			algorithm='HS256').decode('UTF-8')
 		for account in Accounts.accounts:
 			if account.get('email_address') == self.items['email_address']:
 				return {'result':token}
-		return {'result': 'email or password invalid'},406
+			return {'result': 'email or password invalid'},406
 
 	def check_register_input(self):
 		strings = [self.items['first_name'],self.items['last_name'],self.items['role'],
