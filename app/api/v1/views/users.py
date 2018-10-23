@@ -6,7 +6,7 @@ from ..model.users import Accounts
 
 store_users = Namespace('users',description='Users endpoints')
 mod_login = store_users.model('users model',{
-	'email address':fields.String('Email address'),
+	'email_address':fields.String('Email address'),
 	'role': fields.String('Roles'),
 	'password':fields.String('Password')
 	})
@@ -14,7 +14,7 @@ mod_login = store_users.model('users model',{
 mod_register = store_users.model('register store attendant',{
 	'first_name':fields.String('attendant\'s first name'),
 	'last_name': fields.String('attendants\'s last name'),
-	'email address': fields.String('attendant\'s email'),
+	'email_address': fields.String('attendant\'s email'),
 	'role': fields.String('attendant\'s role'),
 	'password': fields.String('attendant\'s password')
 	})

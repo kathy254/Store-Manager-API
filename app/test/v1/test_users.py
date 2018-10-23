@@ -16,7 +16,7 @@ class TestInvalidData(unittest.TestCase):
 
 
 	def test_invalid_email(self):
-		payload = {'role': 'admin', 'password': 'abcd', 'email address': 'stringgmail.com'}
+		payload = {'role': 'admin', 'password': 'abcd', 'email_address': 'stringgmail.com'}
 		response = self.test.post('/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
@@ -25,7 +25,7 @@ class TestInvalidData(unittest.TestCase):
 
 
 	def test_incorrect_role(self):
-		payload = {'role': 'not role', 'password': 'admin', 'email address': 'string@gmail.com'}
+		payload = {'role': 'not role', 'password': 'admin', 'email_address': 'string@gmail.com'}
 		response = self.test.post('/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
@@ -34,7 +34,7 @@ class TestInvalidData(unittest.TestCase):
         
 
 	def test_invalid_login(self):
-		payload = {'role': 'admin', 'password': 'notpassword', 'email address': 'not@gmail.com'}
+		payload = {'role': 'admin', 'password': 'notpassword', 'email_address': 'not@gmail.com'}
 		response = self.test.post('/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
@@ -45,7 +45,7 @@ class TestValidData(unittest.TestCase):
 	def setUp(self):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
-		payload = {'role': 'admin', 'password': 'admin', 'email address': 'admin@gmail.com'}
+		payload = {'role': 'admin', 'password': 'admin', 'email_address': 'admin@gmail.com'}
 		response = self.test.post('/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
@@ -59,7 +59,7 @@ class TestValidData(unittest.TestCase):
 
 
 	def test_user_login(self):
-		payload = {'role': 'admin', 'password': 'abcd', 'email address': 'admin@gmail.com'}
+		payload = {'role': 'admin', 'password': 'abcd', 'email_address': 'admin@gmail.com'}
 		response = self.test.post('/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
@@ -67,7 +67,7 @@ class TestValidData(unittest.TestCase):
 
 
 	def test_register_attendant(self):
-		payload = {'role': 'admin', 'last_name': 'string', 'password': 'abcd', 'email address': 'string@gmail.com',
+		payload = {'role': 'admin', 'last_name': 'string', 'password': 'abcd', 'email_address': 'string@gmail.com',
 		 'first_name': 'string'}
 		response = self.test.post('/users/register',content_type=self.content_type,
 			data=json.dumps(payload),headers=self.headers)

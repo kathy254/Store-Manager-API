@@ -10,7 +10,7 @@ class TestInvalidData(unittest.TestCase):
 	def setUp(self):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
-		payload = {'role': 'admin', 'password': 'abcd', 'email address': 'admin@gmail.com'}
+		payload = {'role': 'admin', 'password': 'abcd', 'email_address': 'admin@gmail.com'}
 		response = self.test.post('/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
@@ -92,7 +92,7 @@ class TestValidData(unittest.TestCase):
 		self.test = create_app('testing').test_client()
 		self.content_type = 'application/json'
 		self.payload = {'name': 'Gucci dress', 'quantity': 1, 'category': 'dresses','moq':0,'price':100}
-		payload = {'role': 'admin', 'password': 'admin', 'email address': 'admin@gmail.com'}
+		payload = {'role': 'admin', 'password': 'admin', 'email_address': 'admin@gmail.com'}
 		response = self.test.post('/users/login',content_type=self.content_type,
 			data=json.dumps(payload))
 		data =json.loads(response.get_data().decode('UTF-8'))
