@@ -7,7 +7,6 @@ from ..model.users import Accounts
 store_users = Namespace('users',description='Users endpoints')
 mod_login = store_users.model('users model',{
 	'email_address':fields.String('Email address'),
-	'role': fields.String('Roles'),
 	'password':fields.String('Password')
 	})
 
