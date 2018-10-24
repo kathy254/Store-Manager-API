@@ -10,6 +10,7 @@ class Accounts(Verify):
 
 	accounts = [{'first_name': 'admin', 'last_name': 'admin', 
 	'email_address': 'admin@gmail.com','password': 'admin'}]
+	
 	def __init__(self,items):
 		self.items = items
 		self.role = self.items['role'] != 'admin' and self.items['role'] != 'attendant'
@@ -36,7 +37,7 @@ class Accounts(Verify):
 		token = jwt.encode({
 			'email_address':self.items['email_address'],
 			'role':self.items['role'],
-			'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)},'765uytjhgmnb',
+			'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=48)},'765uytjhgmnb',
 			algorithm='HS256').decode('UTF-8')
 		for account in Accounts.accounts:
 			if account.get('email_address') == self.items['email_address']:
