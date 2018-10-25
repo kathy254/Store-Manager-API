@@ -17,19 +17,19 @@ mod = store_product.model('product model', {
 })
 
 
-@store_product.route('/')
+@store_product.route('')
 class AllProducts(Resource):
 
 
-    @get_token
-    @store_product.doc(security='apikey')
+    # @get_token
+    @store_product.doc(security='apiKey')
     def get(self):
         return Products.get_all()
 
 
     @store_product.expect(mod, validate=True)
-    @get_token
-    @store_product.doc(security='apikey')
+    # @get_token
+    @store_product.doc(security='apiKey')
     def post(self):
         data = request.get_json()
         obj = Products(data)
@@ -43,8 +43,8 @@ class AllProducts(Resource):
 class SingleProduct(Resource):
 
 
-    @get_token
-    @store_product.doc(secret='apikey')
+    # @get_token
+    @store_product.doc(secret='apiKey')
     def get(self, productId):
         try:
             return Products.get_one(int(productId))

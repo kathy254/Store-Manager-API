@@ -1,61 +1,88 @@
+import os
 import jwt
+from datetime import datetime, timedelta
+from passlib.hash import pbkdf2_sha256 as sha256
 
-import datetime
-
+from instance.config import secret_key
 from .verify import Verify
 
+userId = 1
 
-class Accounts(Verify):
-	
+user_list = []
 
-	accounts = [{'first_name': 'admin', 'last_name': 'admin', 
-	'email_address': 'admin@gmail.com','password': 'admin'}]
-	
-	def __init__(self,items):
-		self.items = items
-		self.role = self.items['role'] != 'admin' and self.items['role'] != 'attendant'
+class Accounts(Verify):	
+
+	def __init__(self, first_name, last_name, email_address, password, role):
+		self.first_name = first_name
+		self.last_name = last_name
+		self.email_address = email_address
+		self.password=password
+		self.role = role
 
 
-	def check_user_input(self):
-		strings = [self.items['email_address'],self.items['role'],self.items['password']]
-		payload=self.is_login_payload(self.items) 
-		if payload is False:
-			res = {'result':'Payload is invalid'},406
-		elif self.is_empty(strings) is True:
-			res = {'result': 'data set is empty'},406
-		elif self.is_whitespace(strings) is True:
-			res = {'result': 'data set contains only white spaces'},406
-		elif self.is_email(self.items['email_address']) is True:
-			res = {'result': 'Email address is invalid'}, 406
-		elif self.role:
-			res = {'result': 'Role is invalid'}, 406
-		else:
-			res = 1
-		return res
+	def create_new_user(self):
+		new_user = 	dict(
+			first_name=self.first_name,
+			last_name=self.last_name,
+			email_address=self.email_address,
+			password = self.password,
+			role = self.role
+		)
 
-	def login(self):
-		token = jwt.encode({
-			'email_address':self.items['email_address'],
-			'role':self.items['role'],
-			'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=48)},'765uytjhgmnb',
-			algorithm='HS256').decode('UTF-8')
-		for account in Accounts.accounts:
-			if account.get('email_address') == self.items['email_address']:
-				return {'result':token}
-			return {'result': 'email or password invalid'},406
+		user_list.append(new_user)
 
-	def check_register_input(self):
-		strings = [self.items['first_name'],self.items['last_name'],self.items['role'],
-		self.items['email_address'],self.items['password']]
-		payload = self.is_register_payload(self.items)
-		if payload is False:
-			return {'result':'Payload is invalid'},406
-		elif self.is_whitespace(strings) is True:
-			return {'result': 'data set contains only white spaces'},406
-		elif self.is_email(self.items['email_address']) is True:
-			return {'result': 'Email address is invalid'}, 406
-		elif self.role:
-			return {'result': 'Role is invalid'}, 406
-		else:
-			Accounts.accounts.append(self.items)
-			return 1
+		return new_user
+		
+
+
+
+	@staticmethod
+	def get_one_user(email_address):
+		one_user= [user for user in user_list if user['email_address'] == email_address]
+
+		if one_user:
+			return one_user[0]
+		return 'User not found'		
+
+	@staticmethod
+	def generate_hash(password):
+		return sha256.hash(password)
+
+	@staticmethod
+	def verify_hash(password, hash):
+		return sha256.verify(password, hash)
+			
+
+
+	@staticmethod
+	def encode_login_token(email_address, role):
+		try:
+			payload = {
+				'exp': datetime.now() + timedelta(hours=24),
+				'iat': datetime.now(),
+				'sub': email_address,
+				'role': role
+			}
+
+			return jwt.encode(
+				payload,
+				secret_key,
+				algorithm='HS256'
+			)
+
+		except Exception as e:
+			return e
+
+	@staticmethod
+	def decode_auth_token(token):
+		"""Method to decode the auth token"""
+
+		try:
+			payload = jwt.decode(token, secret_key, options={'verify_iat':False})
+			print (payload)
+			return payload
+		except jwt.ExpiredSignatureError:
+			return {'message': 'Signature expired. Please log in again.'}
+		except jwt.InvalidTokenError:
+			return {'message': 'Invalid token. Please log in again.'}
+		

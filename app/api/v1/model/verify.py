@@ -33,7 +33,7 @@ class Verify:
 		return res
 
 	def is_login_payload(self,items):
-		res = self.payload(items,3,['email_address','role','password'])
+		res = self.payload(items,2,['email_address','password'])
 		return res
 
 	def is_register_payload(self,items):
