@@ -33,7 +33,7 @@ class Products(Verify):
 		if len(Products.products) == 0:
 			return {'result': 'No products found'},404
 		else:
-			return Products.products,200
+			return Products.products, 200
 
 	@classmethod
 	def get_one(cls,productId):

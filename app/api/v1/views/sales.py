@@ -12,16 +12,17 @@ store_sales = Namespace('sales', description='Sales Endpoints')
 
 mod = store_sales.model('sales model', {
     'productId': fields.Integer(description='Name of product sold'),
-	'quantity': fields.Integer(description='Quantity of product sold')
+	'quantity': fields.Integer(description='Quantity of product sold'),
+    'price': fields.Integer(description='Price of product sold')
 })
 
 
-@store_sales.route('/')
+@store_sales.route('')
 class GetAll(Resource):
 
 
-    @get_token
-    @store_sales.doc(security='apikey')
+    # @get_token
+    @store_sales.doc(security='apiKey')
     def get(self):
         sales = len(Sales.sales)
         if sales < 1:
@@ -31,8 +32,8 @@ class GetAll(Resource):
 
 
     @store_sales.expect(mod, validate=True)
-    @get_token
-    @store_sales.doc(security='apikey')
+    # @get_token
+    @store_sales.doc(security='apiKey')
     def post(self):
         data=request.get_json()
         obj = Sales(data)
@@ -51,8 +52,8 @@ class GetAll(Resource):
 @store_sales.route('/<saleId>')
 class GetSingle(Resource):
 
-    @get_token
-    @store_sales.doc(security='apikey')
+    # @get_token
+    @store_sales.doc(security='apiKey')
     def get(self, saleId):
         try:
             return Sales.sales[int(saleId)]

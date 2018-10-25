@@ -29,12 +29,11 @@ class Login(Resource):
 
 		try:
 			present_user = Accounts.get_one_user(email_address)
-			print(present_user)
 			if present_user == 'User not found':
-				return {
-					'status': 'success',
+				return make_response(jsonify({
+					'status': 'failed',
 					'message': 'User does not exist'
-				}, 404
+				}), 404)
 
 			if present_user and Accounts.verify_hash(password, present_user['password']):
 				role = present_user['role']
@@ -43,7 +42,7 @@ class Login(Resource):
 
 				if token:
 					return make_response(jsonify({
-						'status': 'OK',
+						'status': 'ok',
 						'message': 'You have successfully logged in',
 						'token': token.decode()
 					}), 200)
@@ -101,6 +100,7 @@ class RegisterStoreAttendant(Resource):
 					'message': str(e),
 					'status': 'failed'
 				}))
+
 		return make_response(jsonify({
 			'status': 'failed',
 			'message': 'Email address already exists. Please log in.'

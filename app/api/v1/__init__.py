@@ -10,7 +10,7 @@ authorizations = {
     'apikey': {
         'type': 'apiKey',
         'in': 'header',
-        'name': 'Authorization'
+        'name': 'X-API-KEY'
     }
 }
 
