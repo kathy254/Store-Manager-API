@@ -26,3 +26,26 @@ The main features of this API include:
 - The store attendant can fetch a single product using its ID.
 - The store owner can access the sales records of all store attendants.
 - The store owner can add, delete and modify a product
+
+**Endpoints**
+
+Endpoint                                | Functionality
+--------------------------------------- | -------------------------------------------------
+GET /products | Fetch all products
+GET /products/<productId> | Fetch a single product record
+GET /sales | Fetch all sale records
+GET /sales/<saleId> | Fetch a single sale record
+POST /products | Create a product
+POST /sales | Create a sale order
+POST /users/register | Register a user
+POST /users/login | Login a user
+
+**Contributor**
+Catherine Faith Omondi
+
+**Acknowledgment**
+- Head First Labs
+- Prettyprinted.com
+- Pre-bootcamp workshops
+- Bootcamp
+- Stackoverflow.com
