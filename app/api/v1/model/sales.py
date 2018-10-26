@@ -20,7 +20,7 @@ class Sales(Verify):
 	def add_sales_record(self):
 		items = self.items
 		prodID = Products.get_one(items['productId'])
-		total = prodID[items['productId']]['price'] * items['quantity']
+		total = ['price'] * items['quantity']
 		items['price'] = total
 		Sales.sales.append(items)
 		return {'result': 'sales added'}, 201

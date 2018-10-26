@@ -22,14 +22,14 @@ class AllProducts(Resource):
 
 
     # @get_token
-    @store_product.doc(security='apiKey')
+    @store_product.doc(security='apikey')
     def get(self):
         return Products.get_all()
 
 
     @store_product.expect(mod, validate=True)
     # @get_token
-    @store_product.doc(security='apiKey')
+    @store_product.doc(security='apikey')
     def post(self):
         data = request.get_json()
         obj = Products(data)
@@ -44,7 +44,7 @@ class SingleProduct(Resource):
 
 
     # @get_token
-    @store_product.doc(secret='apiKey')
+    @store_product.doc(secret='apikey')
     def get(self, productId):
         try:
             return Products.get_one(int(productId))

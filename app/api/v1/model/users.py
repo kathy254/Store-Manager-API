@@ -6,10 +6,12 @@ from instance.config import secret_key
 from .verify import Verify
 
 userId = 1
-
+	
 user_list = []
 
 class Accounts(Verify):	
+
+	
 
 	def __init__(self, first_name, last_name, email_address, password, role):
 		self.first_name = first_name
@@ -18,21 +20,16 @@ class Accounts(Verify):
 		self.password=password
 		self.role = role
 
-
 	def create_new_user(self):
-		new_user = 	dict(
-			first_name=self.first_name,
+		new_user = dict(
+            first_name=self.first_name,
 			last_name=self.last_name,
 			email_address=self.email_address,
-			password = self.password,
-			role = self.role
+			password=self.password,
+			role= self.role
 		)
-
 		user_list.append(new_user)
-
-		return new_user
-		
-
+		return new_user	
 
 
 	@staticmethod
@@ -63,11 +60,13 @@ class Accounts(Verify):
 				'role': role
 			}
 
-			return jwt.encode(
+			token = jwt.encode(
 				payload,
 				secret_key,
 				algorithm='HS256'
 			)
+
+			return token
 
 		except Exception as e:
 			return e
@@ -77,7 +76,7 @@ class Accounts(Verify):
 		"""Method to decode the auth token"""
 
 		try:
-			payload = jwt.decode(token, secret_key)
+			payload = jwt.decode(token, secret_key, options={'verify_iat': False})
 			return payload
 		except jwt.ExpiredSignatureError:
 			return {'message': 'Signature expired. Please log in again.'}

@@ -22,7 +22,7 @@ class GetAll(Resource):
 
 
     # @get_token
-    @store_sales.doc(security='apiKey')
+    @store_sales.doc(security='apikey')
     def get(self):
         sales = len(Sales.sales)
         if sales < 1:
@@ -33,7 +33,7 @@ class GetAll(Resource):
 
     @store_sales.expect(mod, validate=True)
     # @get_token
-    @store_sales.doc(security='apiKey')
+    @store_sales.doc(security='apikey')
     def post(self):
         data=request.get_json()
         obj = Sales(data)
@@ -53,7 +53,7 @@ class GetAll(Resource):
 class GetSingle(Resource):
 
     # @get_token
-    @store_sales.doc(security='apiKey')
+    @store_sales.doc(security='apikey')
     def get(self, saleId):
         try:
             return Sales.sales[int(saleId)]

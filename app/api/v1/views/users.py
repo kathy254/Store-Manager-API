@@ -14,52 +14,6 @@ parser.add_argument('password', help='This field cannot be blank')
 
 
 store_users = Namespace('users', description='Users endpoints')
-mod_login = store_users.model('users model',{
-	'email_address':fields.String('Email address'),
-	'password':fields.String('Password')
-	})
-
-@store_users.route('/login')
-class Login(Resource):
-	@store_users.expect(mod_login)
-	def post(self):
-		args = parser.parse_args()
-		email_address=args['email_address']
-		password=args['password']
-
-		try:
-			present_user = Accounts.get_one_user(email_address)
-			if present_user == 'User not found':
-				return make_response(jsonify({
-					'status': 'failed',
-					'message': 'User does not exist'
-				}), 404)
-
-			if present_user and Accounts.verify_hash(password, present_user['password']):
-				role = present_user['role']
-				email_address=present_user['email_address']
-				token = Accounts.encode_login_token(email_address, role)
-
-				if token:
-					return make_response(jsonify({
-						'status': 'ok',
-						'message': 'You have successfully logged in',
-						'token': token.decode()
-					}), 200)
-
-			else:
-				return make_response(jsonify({
-					'status': 'failed',
-					'message': "Email address or password is incorrect"
-				}), 400)
-
-		except Exception as e:
-			return make_response(jsonify({
-				'message': str(e),
-				'status': 'failed'
-			}), 500)
-
-		
 mod_register = store_users.model('register store attendant',{
 	'first_name':fields.String('attendant\'s first name'),
 	'last_name': fields.String('attendants\'s last name'),
@@ -93,15 +47,66 @@ class RegisterStoreAttendant(Resource):
 					'status': 'success',
 					'message': 'Account created. Please log in',
 					'users': new_user
-				}))
+				}), 201)
 
 			except Exception as e:
 				return make_response(jsonify({
 					'message': str(e),
 					'status': 'failed'
-				}))
+				}), 500)
 
 		return make_response(jsonify({
 			'status': 'failed',
 			'message': 'Email address already exists. Please log in.'
-		}))
+		}), 500)
+
+
+mod_login = store_users.model('users model',{
+	'email_address':fields.String('Email address'),
+	'password':fields.String('Password')
+	})
+
+@store_users.route('/login')
+class Login(Resource):
+	@store_users.expect(mod_login)
+	def post(self):
+		args = parser.parse_args()
+		email_address=args['email_address']
+		password=args['password']
+
+		try:
+			present_user = Accounts.get_one_user(email_address)
+			if present_user == 'User not found':
+				return make_response(jsonify({
+					'status': 'failed',
+					'message': 'User does not exist'
+				}), 200)
+
+
+
+			if present_user and Accounts.verify_hash(password, present_user['password']):
+				print("user exists")
+				role = present_user['role']
+				email_address=present_user['email_address']
+				token = Accounts.encode_login_token(email_address, role)
+
+				if token:
+					return make_response(jsonify({
+						'status': 'ok',
+						'message': 'You have successfully logged in',
+						'token': token.decode()
+					}), 200)
+
+			else:
+				return make_response(jsonify({
+					'status': 'failed',
+					'message': "Email address or password is incorrect"
+				}), 400)
+
+		except Exception as e:
+			return make_response(jsonify({
+				'message': str(e),
+				'status': 'failed'
+			}), 500)
+
+		
