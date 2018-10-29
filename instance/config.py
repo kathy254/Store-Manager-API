@@ -2,7 +2,7 @@ class Config(object):
     #Parent configuration class
     DEBUG = False
     SECRET = '765uytjhgmnb'
-    ENV = 'development'
+    ENV='development'
     TESTING=False
 
 

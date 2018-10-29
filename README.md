@@ -1,7 +1,5 @@
 # Store-Manager-API
 
-[![Coverage Status](https://coveralls.io/repos/github/kathy254/Store-Manager-API/badge.png?branch=ft-store-attendant-161239141)](https://coveralls.io/github/kathy254/Store-Manager-API?branch=ft-store-attendant-161239141)
-
 [![Build Status](https://travis-ci.org/kathy254/Store-Manager-API.svg?branch=ft-store-attendant-161239141)](https://travis-ci.org/kathy254/Store-Manager-API)
 
 Store manager API
@@ -26,3 +24,26 @@ The main features of this API include:
 - The store attendant can fetch a single product using its ID.
 - The store owner can access the sales records of all store attendants.
 - The store owner can add, delete and modify a product
+
+**Endpoints**
+
+Endpoint                                | Functionality
+--------------------------------------- | -------------------------------------------------
+GET /products | Fetch all products
+GET /products/<productId> | Fetch a single product record
+GET /sales | Fetch all sale records
+GET /sales/<saleId> | Fetch a single sale record
+POST /products | Create a product
+POST /sales | Create a sale order
+POST /users/register | Register a user
+POST /users/login | Login a user
+
+**Contributor**
+Catherine Faith Omondi
+
+**Acknowledgment**
+- Head First Labs
+- Prettyprinted.com
+- Pre-bootcamp workshops
+- Bootcamp
+- Stackoverflow.com
