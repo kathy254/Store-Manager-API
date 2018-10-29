@@ -10,7 +10,6 @@ userId = 1
 user_list = []
 
 class Accounts(Verify):	
-
 	
 
 	def __init__(self, first_name, last_name, email_address, password, role):
@@ -19,6 +18,23 @@ class Accounts(Verify):
 		self.email_address = email_address
 		self.password=password
 		self.role = role
+
+	def check_user_input(self):
+		strings = self.email_address, self.password
+		payload=self.is_login_payload(strings) 
+		if payload is False:
+			res = {'result':'invalid payload'},406
+		elif self.is_empty(strings) is True:
+			res = {'result': 'data set is empty'},406
+		elif self.is_whitespace(strings) is True:
+			res = {'result': 'data set contains only white space'},406
+		elif self.is_email(self.email_address) is True:
+			res = {'result': 'invalid email'}, 406
+		elif self.role:
+			res = {'result': 'invalid role'}, 406
+		else:
+			res = 1
+		return res
 
 	def create_new_user(self):
 		new_user = dict(

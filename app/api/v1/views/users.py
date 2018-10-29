@@ -13,7 +13,7 @@ parser.add_argument('role', help='This field cannot be blank')
 parser.add_argument('password', help='This field cannot be blank')
 
 
-store_users = Namespace('users', description='Users endpoints')
+store_users = Namespace('auth', description='Users endpoints')
 mod_register = store_users.model('register store attendant',{
 	'first_name':fields.String('attendant\'s first name'),
 	'last_name': fields.String('attendants\'s last name'),

@@ -21,10 +21,10 @@ mod = store_product.model('product model', {
 class AllProducts(Resource):
 
 
-    # @get_token
+    @get_token
     @store_product.doc(security='apikey')
     def get(self):
-        return Products.get_all()
+        return Products.get_all_products()
 
 
     @store_product.expect(mod, validate=True)
@@ -43,11 +43,11 @@ class AllProducts(Resource):
 class SingleProduct(Resource):
 
 
-    # @get_token
+    @get_token
     @store_product.doc(secret='apikey')
     def get(self, productId):
         try:
-            return Products.get_one(int(productId))
+            return Products.get_product_by_id(int(productId))
         except IndexError:
             return {'result': 'No products found'}, 404
 

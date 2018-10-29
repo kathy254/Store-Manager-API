@@ -21,7 +21,7 @@ mod = store_sales.model('sales model', {
 class GetAll(Resource):
 
 
-    # @get_token
+    @get_token
     @store_sales.doc(security='apikey')
     def get(self):
         sales = len(Sales.sales)
@@ -32,7 +32,7 @@ class GetAll(Resource):
 
 
     @store_sales.expect(mod, validate=True)
-    # @get_token
+    @get_token
     @store_sales.doc(security='apikey')
     def post(self):
         data=request.get_json()
@@ -52,7 +52,7 @@ class GetAll(Resource):
 @store_sales.route('/<saleId>')
 class GetSingle(Resource):
 
-    # @get_token
+    @get_token
     @store_sales.doc(security='apikey')
     def get(self, saleId):
         try:

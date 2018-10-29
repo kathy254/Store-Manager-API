@@ -29,14 +29,14 @@ class Products(Verify):
 		return {'result': 'product added'},201
 
 	@classmethod
-	def get_all(cls):
+	def get_all_products(cls):
 		if len(Products.products) == 0:
 			return {'result': 'No products found'},404
 		else:
 			return Products.products, 200
 
 	@classmethod
-	def get_one(cls,productId):
+	def get_product_by_id(cls,productId):
 		if len(Products.products) == 0:
 			return {'result': 'No products found'},404
 		else:

@@ -29,7 +29,7 @@ class Verify:
 		return res
 
 	def is_sales_payload(self,items):
-		res = self.payload(items,3,['productId','quantity','price'])
+		res = self.payload(items,4,['Product_name', 'productId','quantity','price'])
 		return res
 
 	def is_login_payload(self,items):
