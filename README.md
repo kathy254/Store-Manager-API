@@ -1,6 +1,6 @@
 # Store-Manager-API
 
-[![Build Status](https://travis-ci.org/kathy254/Store-Manager-API.svg?branch=ft-store-attendant-161239141)](https://travis-ci.org/kathy254/Store-Manager-API)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://travis-ci.org/kathy254/Store-Manager-v2.svg?branch=develop)](https://travis-ci.org/kathy254/Store-Manager-v2)   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Store manager API
 
